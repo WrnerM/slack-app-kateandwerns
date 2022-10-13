@@ -1,9 +1,12 @@
 import './App.css';
-import HelloWorld from './components/HelloWorld';
+import Authentication from './components/Authentication';
 
 function App() {
+
   return (
-    <HelloWorld />
+    <div>
+      <Authentication />
+    </div>
   );
 }
 
