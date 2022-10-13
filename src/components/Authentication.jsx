@@ -1,25 +1,29 @@
 import React from 'react'
 import { useState } from 'react'
 import SignUp from './SignUp'
-import LogIn from './LogIn'
+import SignIn from './SignIn'
 
-const Authentication = () => {
+const Authentication = ({successSignIn}) => {
 
   const [showSignUp, setShowSignUp] = useState(false);
   const [showSignIn, setShowSignIn] = useState(true);
 
-  const toggleAuth = () => {
-    setShowSignUp(current => !current);
-    setShowSignIn(current => !current);
+  const toggleSignIn = () => {
+    setShowSignUp(false);
+    setShowSignIn(true);
+  }
+
+  const toggleSignUp = () => {
+    setShowSignUp(true);
+    setShowSignIn(false);
   }
 
   return (
     <div>
-      <button onClick={toggleAuth}>Toggle</button>
-      <h2>Sign Up</h2>
-      <SignUp />
-      <h2>Log In</h2>
-      <LogIn />
+      <button onClick={toggleSignIn}>Sign In</button>
+      <button onClick={toggleSignUp}>Sign Up</button>
+      {showSignUp && <SignUp toggleSignIn={toggleSignIn}/>}
+      {showSignIn && <SignIn successSignIn={successSignIn}/>}
     </div>
   )
 }
