@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SignUp = () => {
+const SignUp = ({toggleSignIn}) => {
 
   const addAccount = (e) => {
     e.preventDefault();
@@ -23,11 +23,12 @@ const SignUp = () => {
 
   const success = (data) => {
     console.log(data)
-    //change state to sign in
+    toggleSignIn();
   }
   
   return (
     <div>
+      <h2>Sign Up</h2>
       <form onSubmit={addAccount}>
         <input name="signUpEmail" type="email" placeholder="Email"/><br/>
         <input name="signUpPassword" type="password" placeholder="Password"/><br/>
