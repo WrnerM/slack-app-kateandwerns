@@ -39,6 +39,7 @@ const SignIn = ({ successSignIn }) => {
       const headers = [...res.headers.entries()].reduce((acc, val) => {
         acc[val[0]] = val[1];
         return acc;
+  
       }, {});
 
       data = { body, headers };
@@ -46,12 +47,14 @@ const SignIn = ({ successSignIn }) => {
       localStorage.setItem("loginCredentials", JSON.stringify(data));
     } catch (error) {
       errors = error.errors;
+      // errors = body.errors;
       console.log(errors);
     }
   };
 
+
   const success = (data) => {
-    //console.log(data);
+    console.log(data);
     successSignIn();
   };
 
