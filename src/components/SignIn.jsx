@@ -8,7 +8,7 @@ const SignIn = ({ successSignIn }) => {
     let data;
 
     try {
-      // Fetch API
+      // Fetch Avion API
       const res = await fetch("http://206.189.91.54/api/v1/auth/sign_in", {
         method: "POST",
         headers: {
@@ -45,6 +45,7 @@ const SignIn = ({ successSignIn }) => {
     }
   };
 
+  // Redirect to Dashboard
   const success = (data) => {
     console.log(data);
     successSignIn();

@@ -4,6 +4,8 @@ const SignUp = ({toggleSignIn}) => {
 
   const addAccount = (e) => {
     e.preventDefault();
+
+    // Fetch Avion API
     fetch("http://206.189.91.54/api/v1/auth/", {
       method: "POST",
       headers: {
@@ -18,13 +20,16 @@ const SignUp = ({toggleSignIn}) => {
       return res.json()
     })
     .then ((data) => {
+      // Return error if status = error
       if (data.status === "error"){
         console.log("status:", data.status);
+      // Run success if no error
       } else {success(data)}
     })
     .catch(error => console.log("error"))
   }
 
+  // Redirect to Sign In
   const success = (data) => {
     console.log(data)
     toggleSignIn();
