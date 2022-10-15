@@ -17,7 +17,11 @@ const SignUp = ({toggleSignIn}) => {
     }).then(res => {
       return res.json()
     })
-    .then(data => success(data))
+    .then ((data) => {
+      if (data.status === "error"){
+        console.log("status:", data.status);
+      } else {success(data)}
+    })
     .catch(error => console.log("error"))
   }
 
