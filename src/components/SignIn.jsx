@@ -1,7 +1,6 @@
 import React from "react";
 
 const SignIn = ({ successSignIn }) => {
-
   const signIn = async (e) => {
     e.preventDefault();
     let errors;
@@ -30,10 +29,12 @@ const SignIn = ({ successSignIn }) => {
       data = { body, headers };
 
       // Console.log error if success = false
-      if (data.body.success === false){
+      if (data.body.success === false) {
         console.log("status:", data.body.success);
-      // Redirect to dashboard if success = true
-      } else {success(data)}
+        // Redirect to dashboard if success = true
+      } else {
+        success(data);
+      }
 
       // Add data to Local Storage
       localStorage.setItem("loginCredentials", JSON.stringify(data));
@@ -47,7 +48,6 @@ const SignIn = ({ successSignIn }) => {
 
   // Redirect to Dashboard
   const success = (data) => {
-    console.log(data);
     successSignIn();
   };
 
