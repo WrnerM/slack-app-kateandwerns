@@ -1,6 +1,6 @@
 import React from "react";
 
-const SignIn = ({ successSignIn }) => {
+const SignIn = () => {
 
   const signIn = async (e) => {
     e.preventDefault();
@@ -38,6 +38,9 @@ const SignIn = ({ successSignIn }) => {
       // Add data to Local Storage
       localStorage.setItem("loginCredentials", JSON.stringify(data));
 
+      // Stay logged in
+      localStorage.setItem("isLoggedIn", true);
+
       // Show error if fetch is unsuccessful
     } catch (error) {
       errors = error.errors;
@@ -48,7 +51,8 @@ const SignIn = ({ successSignIn }) => {
   // Redirect to Dashboard
   const success = (data) => {
     console.log(data);
-    successSignIn();
+    window.location.reload();
+    // successSignIn();
   };
 
   return (
