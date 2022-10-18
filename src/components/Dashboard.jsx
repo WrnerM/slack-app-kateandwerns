@@ -1,17 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Dashboard = () => {
-  //list of all users
-  // const headers = JSON.parse(localStorage.getItem("loginCredentials")).headers;
-  // console.log(headers)
-  // fetch("http://206.189.91.54/api/v1/users", {
-  //   method: "GET",
-  //   headers,
-  // })
-  //   .then((res) => res.json())
-  //   .then((data) => console.log(data));
+  const [searchUser, setSearchUser] = useState([]);
 
-  
+  //list of all users
+
+  const headers = JSON.parse(localStorage.getItem("loginCredentials")).headers;
+  fetch("http://206.189.91.54/api/v1/users", {
+    method: "GET",
+    headers,
+  })
+    .then((res) => res.json())
+    .then((res) => res.data)
+    .then((users) =>
+      users.map((user) => {
+        return { label: user.uid, value: user.id };
+      })
+    )
+    .then((data) => setSearchUser(data));
 
   return (
     <div>
