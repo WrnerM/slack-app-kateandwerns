@@ -1,40 +1,46 @@
-import React, { useState, useEffect } from "react";
-import { SearchUser } from "./SearchUser";
+import React from "react";
+import Messaging from "./Messaging";
 
 const Dashboard = () => {
-  const [users, setUsers] = useState([]);
-  //list of all users
 
-  const headers = JSON.parse(localStorage.getItem("loginCredentials")).headers;
+  // Get headers of logged in user
+  const loginCredentials = JSON.parse(localStorage.getItem("loginCredentials"));
+  const headers = loginCredentials.headers;
+  // console.log(loginCredentials);
+  // console.log(headers);
 
-  fetch("http://206.189.91.54/api/v1/users", {
-    method: "GET",
-    headers,
-  })
-    .then((res) => res.json())
-    .then((res) => res.data)
+  // Get list of ALL USERS
+  const getUsers = async (e) => {
+    e.preventDefault();
+    try{
+      // Fetch Avion API
+      const res = await fetch("http://206.189.91.54/api/v1/users", {
+        method: "GET",
+        headers: headers
+      })
+        .then((res) => res.json())
 
-    .then(
-      (users) => {
-        setUsers(users);
-      }
-      //users.map((user) => {
-      //setSearchUser(user);
-      //console.log(user);
-      //return { label: user.uid, value: user.id };
-      //})
-    );
-  //.then((data) => setSearchUser(data));
+        // Show data if fetch is successful
+        .then((data) => {
+          console.log(data)
+        })
+
+      // Show error if fetch is unsuccessful
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
+      <button onClick={getUsers}>Get Users</button>
       <div>
         <SearchUser
           users={users}
           //setSearchUserResults={setSearchUserResults}
         />
       </div>
-      CHAT
+        <Messaging headers={headers}/>
     </div>
   );
 };
