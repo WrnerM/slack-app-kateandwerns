@@ -4,15 +4,17 @@ import Messaging from "./Messaging";
 const Dashboard = () => {
 
   // Get headers of logged in user
-  const headers = JSON.parse(localStorage.getItem("loginCredentials")).headers;
-  console.log(headers)
+  const loginCredentials = JSON.parse(localStorage.getItem("loginCredentials"));
+  const headers = loginCredentials.headers;
+  // console.log(loginCredentials);
+  // console.log(headers);
 
   // Get list of ALL USERS
   const getUsers = async (e) => {
     e.preventDefault();
     try{
       // Fetch Avion API
-      const res = await fetch("http://206.189.91.54/api/v1/users",{
+      const res = await fetch("http://206.189.91.54/api/v1/users", {
         method: "GET",
         headers: headers
       })
@@ -36,7 +38,7 @@ const Dashboard = () => {
         <h2>Channels</h2>
         <p>Create new channel</p>
       </div>
-        <Messaging />
+        <Messaging headers={headers}/>
     </div>
   );
 };
