@@ -16,8 +16,8 @@ const Dashboard = () => {
       users.map((user) => {
         return { label: user.uid, value: user.id };
       })
-    );
-  //.then((data) => console.log(data));
+    )
+    .then((data) => setSearchUser(data));
 
   return (
     <div>
