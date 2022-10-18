@@ -35,8 +35,10 @@ const Dashboard = () => {
     <div>
       <button onClick={getUsers}>Get Users</button>
       <div>
-        <h2>Channels</h2>
-        <p>Create new channel</p>
+        <SearchUser
+          users={users}
+          //setSearchUserResults={setSearchUserResults}
+        />
       </div>
         <Messaging headers={headers}/>
     </div>
