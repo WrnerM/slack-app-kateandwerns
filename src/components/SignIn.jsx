@@ -1,6 +1,6 @@
 import React from "react";
 
-const SignIn = ({ successSignIn }) => {
+const SignIn = () => {
   const signIn = async (e) => {
     e.preventDefault();
     let errors;
@@ -15,12 +15,13 @@ const SignIn = ({ successSignIn }) => {
         },
         body: JSON.stringify({
           email: e.target.signInEmail.value,
-          password: e.target.signInPassword.value,
+          password: e.target.signInPassword.value
         }),
       });
 
-      // Redefine header into object
       const body = await res.json();
+
+      // Redefine header into object
       const headers = [...res.headers.entries()].reduce((acc, val) => {
         acc[val[0]] = val[1];
         return acc;
@@ -39,6 +40,9 @@ const SignIn = ({ successSignIn }) => {
       // Add data to Local Storage
       localStorage.setItem("loginCredentials", JSON.stringify(data));
 
+      // Stay logged in
+      localStorage.setItem("isLoggedIn", true);
+
       // Show error if fetch is unsuccessful
     } catch (error) {
       errors = error.errors;
@@ -48,7 +52,8 @@ const SignIn = ({ successSignIn }) => {
 
   // Redirect to Dashboard
   const success = (data) => {
-    successSignIn();
+    console.log(data);
+    window.location.reload();
   };
 
   return (

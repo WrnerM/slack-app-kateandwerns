@@ -6,6 +6,7 @@ import { Messaging } from "./Messaging";
 const Dashboard = () => {
   const [users, setUsers] = useState([]);
 
+
   // Get headers of logged in user
   const loginCredentials = JSON.parse(localStorage.getItem("loginCredentials"));
   const headers = loginCredentials.headers;
@@ -15,6 +16,7 @@ const Dashboard = () => {
   // Get list of ALL USERS
   const getUsers = async (e) => {
     e.preventDefault();
+    
     try {
       // Fetch Avion API
       const res = await fetch("http://206.189.91.54/api/v1/users", {
@@ -32,6 +34,7 @@ const Dashboard = () => {
           console.log(data);
         });
 
+
       // Show error if fetch is unsuccessful
     } catch (error) {
       console.log(error);
@@ -47,7 +50,9 @@ const Dashboard = () => {
           //setSearchUserResults={setSearchUserResults}
         />
       </div>
+      
       {/* //<Messaging headers={headers} /> */}
+
     </div>
   );
 };

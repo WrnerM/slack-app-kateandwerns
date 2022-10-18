@@ -3,7 +3,7 @@ import { useState } from 'react'
 import SignUp from './SignUp'
 import SignIn from './SignIn'
 
-const Authentication = ({successSignIn}) => {
+const Authentication = () => {
 
   const [showSignUp, setShowSignUp] = useState(false);
   const [showSignIn, setShowSignIn] = useState(true);
@@ -23,7 +23,7 @@ const Authentication = ({successSignIn}) => {
       <button onClick={toggleSignIn}>Sign In</button>
       <button onClick={toggleSignUp}>Sign Up</button>
       {showSignUp && <SignUp toggleSignIn={toggleSignIn}/>}
-      {showSignIn && <SignIn successSignIn={successSignIn}/>}
+      {showSignIn && <SignIn/>}
     </div>
   )
 }

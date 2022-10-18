@@ -1,22 +1,17 @@
 import './App.css';
-import { useState } from 'react';
 import Authentication from './components/Authentication';
 import Dashboard from './components/Dashboard';
 
 function App() {
-
-  const [showAuthPage, setshowAuthPage] = useState(true);
-  const [showDashboard, setshowDashboard] = useState(false);
-
-  const successSignIn = () => {
-    setshowAuthPage(false);
-    setshowDashboard(true);
-  }
+  // Stay logged in
+  const loggedIn = localStorage.getItem("isLoggedIn");
 
   return (
     <div>
-      {showAuthPage && <Authentication successSignIn={successSignIn} />}
-      {showDashboard && <Dashboard />}
+      {loggedIn
+        ? <Dashboard />
+        : <Authentication />
+      }
     </div>
   );
 }
