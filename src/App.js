@@ -1,5 +1,4 @@
 import './App.css';
-import { useState } from 'react';
 import Authentication from './components/Authentication';
 import Dashboard from './components/Dashboard';
 

@@ -15,12 +15,13 @@ const SignIn = () => {
         },
         body: JSON.stringify({
           email: e.target.signInEmail.value,
-          password: e.target.signInPassword.value,
+          password: e.target.signInPassword.value
         }),
       });
 
-      // Redefine header into object
       const body = await res.json();
+
+      // Redefine header into object
       const headers = [...res.headers.entries()].reduce((acc, val) => {
         acc[val[0]] = val[1];
         return acc;
@@ -53,7 +54,6 @@ const SignIn = () => {
   const success = (data) => {
     console.log(data);
     window.location.reload();
-    // successSignIn();
   };
 
   return (
