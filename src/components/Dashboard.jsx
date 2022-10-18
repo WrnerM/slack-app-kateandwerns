@@ -1,7 +1,11 @@
 import React from "react";
+import { useState } from "react";
+import {SearchUser} from "./SearchUser.jsx"
 import Messaging from "./Messaging";
 
 const Dashboard = () => {
+
+  const [users, setUsers] = useState([]);
 
   // Get headers of logged in user
   const loginCredentials = JSON.parse(localStorage.getItem("loginCredentials"));
@@ -19,6 +23,10 @@ const Dashboard = () => {
         headers: headers
       })
         .then((res) => res.json())
+
+        .then((users) => {
+          setUsers(users);
+        })
 
         // Show data if fetch is successful
         .then((data) => {
