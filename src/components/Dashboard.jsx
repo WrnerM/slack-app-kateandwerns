@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import RenderUsersList from "./RenderUsersList";
 import { SearchUser } from "./SearchUser";
 
 const Dashboard = () => {
@@ -33,8 +34,8 @@ const Dashboard = () => {
           users={users}
           //setSearchUserResults={setSearchUserResults}
         />
+        <RenderUsersList />
       </div>
-      CHAT
     </div>
   );
 };
