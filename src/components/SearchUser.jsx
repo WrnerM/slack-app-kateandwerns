@@ -21,7 +21,7 @@ export const SearchUser = ({ users }) => {
   const filteredUsers = users.filter((user) => {
     return user.uid.includes(searchInput);
   });
-  console.log("filteredUsers", filteredUsers);
+  // console.log("filteredUsers", filteredUsers);
   //console.log("users", users);
   //console.log("searchinput", searchInput);
 

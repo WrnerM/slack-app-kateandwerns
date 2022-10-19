@@ -6,7 +6,11 @@ function App() {
   // Stay logged in
   const loggedIn = localStorage.getItem("isLoggedIn");
 
-  return <div>{loggedIn ? <Dashboard /> : <Authentication />}</div>;
+  return (
+    <div>
+      {loggedIn ? <Dashboard /> : <Authentication />}
+    </div>
+  );
 }
 
 export default App;

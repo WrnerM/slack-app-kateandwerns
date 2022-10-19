@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { SearchUser } from "./SearchUser";
+import CreateChannel from "./CreateChannel";
+import AllChannels from "./AllChannels";
+import ChannelDetails from "./ChannelDetails";
+import AddMember from "./AddMember";
 // import Messaging from "./Messaging";
 
 const Dashboard = () => {
@@ -38,6 +42,10 @@ const Dashboard = () => {
         />
       </div>
       {/* <Messaging /> */}
+      <CreateChannel headers={headers} users={users} />
+      <AllChannels headers={headers} />
+      <ChannelDetails headers={headers} />
+      <AddMember headers={headers} />
     </div>
   );
 };
