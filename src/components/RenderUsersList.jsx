@@ -1,7 +1,7 @@
 import React from "react";
 
 const RenderUsersList = () => {
-  return <div>RenderUsersList</div>;
+  return <div></div>;
 };
 
 export default RenderUsersList;

@@ -38,7 +38,7 @@ export const SearchUser = ({ users }) => {
         // onSubmit={handleSubmit}
         onChange={handleSearchChange}
       />
-      <RenderUsersList />
+      {/* <RenderUsersList filteredUsers={ filteredUsers } /> */}
     </div>
   );
 };

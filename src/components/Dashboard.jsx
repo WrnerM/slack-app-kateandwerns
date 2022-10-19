@@ -34,7 +34,8 @@ const Dashboard = () => {
           users={users}
           //setSearchUserResults={setSearchUserResults}
         />
-        <RenderUsersList />
+        {/* <RenderUsersList /> */}
+        CHAT
       </div>
     </div>
   );
