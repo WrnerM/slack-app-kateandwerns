@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import RenderUsersList from "./RenderUsersList";
+import Messaging from "./Messaging";
 
 export const SearchUser = ({ users }) => {
   const [searchInput, setSearchInput] = useState("");
@@ -39,6 +40,7 @@ export const SearchUser = ({ users }) => {
         onChange={handleSearchChange}
       />
       <RenderUsersList />
+      <Messaging filteredUsers={filteredUsers}/>
     </div>
   );
 };

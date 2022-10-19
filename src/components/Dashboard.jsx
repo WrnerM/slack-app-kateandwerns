@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { SearchUser } from "./SearchUser";
+// import Messaging from "./Messaging";
 
 const Dashboard = () => {
   const [users, setUsers] = useState([]);
@@ -36,7 +37,7 @@ const Dashboard = () => {
           //setSearchUserResults={setSearchUserResults}
         />
       </div>
-      CHAT
+      {/* <Messaging /> */}
     </div>
   );
 };
