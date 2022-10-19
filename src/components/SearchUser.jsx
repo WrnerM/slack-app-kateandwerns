@@ -4,7 +4,7 @@ import Messaging from "./Messaging";
 
 export const SearchUser = ({ users }) => {
   const [searchInput, setSearchInput] = useState("");
-
+  const [userWillMessage, setUserWillMessage] = useState("");
   //   const handleSubmit = (e) => e.preventDefault();
   //   console.log(searchUser);
   //   const handleSearchChange = (e) => {
@@ -19,11 +19,9 @@ export const SearchUser = ({ users }) => {
   //   };
 
   const filteredUsers = users.filter((user) => {
-    return user.uid.includes(searchInput);
+    return user.uid.toLowerCase().includes(searchInput);
   });
   console.log(filteredUsers);
-  //console.log("users", users);
-  //console.log("searchinput", searchInput);
 
   const handleSearchChange = (e) => {
     setSearchInput(e.target.value);
@@ -42,6 +40,12 @@ export const SearchUser = ({ users }) => {
           // onSubmit={handleSubmit}
           onChange={handleSearchChange}
         />
+        <ul className="listOfUsers">
+          {filteredUsers.map((email) => (
+            <li key={email.id}>{email.email}</li>
+          ))}
+        </ul>
+
         <div className="chatMsgs"></div>
 
         <Messaging filteredUsers={filteredUsers} />

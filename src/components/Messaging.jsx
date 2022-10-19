@@ -88,7 +88,7 @@ const Messaging = ({ filteredUsers }) => {
           placeholder="Type message..."
         />
         <button className="sendMsgButton" type="submit">
-          Send message
+          Send Message
         </button>
       </form>
 
