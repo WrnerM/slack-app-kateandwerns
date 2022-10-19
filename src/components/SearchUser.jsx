@@ -21,7 +21,7 @@ export const SearchUser = ({ users }) => {
   const filteredUsers = users.filter((user) => {
     return user.uid.includes(searchInput);
   });
-  console.log("filteredUsers", filteredUsers);
+  console.log(filteredUsers);
   //console.log("users", users);
   //console.log("searchinput", searchInput);
 
@@ -31,16 +31,21 @@ export const SearchUser = ({ users }) => {
 
   return (
     <div>
-      <p>User search:</p>
-      <input
-        value={searchInput}
-        type="text"
-        placeholder="Search user by email"
-        // onSubmit={handleSubmit}
-        onChange={handleSearchChange}
-      />
-      <RenderUsersList />
-      <Messaging filteredUsers={filteredUsers}/>
+      <div className="chatBox">
+        <h3 className="directMessages">Direct Messages</h3>
+        <p>User search:</p>
+        <input
+          className="searchBoxUser"
+          value={searchInput}
+          type="text"
+          placeholder="Search user by email"
+          // onSubmit={handleSubmit}
+          onChange={handleSearchChange}
+        />
+        <div className="chatMsgs"></div>
+
+        <Messaging filteredUsers={filteredUsers} />
+      </div>
     </div>
   );
 };
