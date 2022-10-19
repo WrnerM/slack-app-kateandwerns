@@ -38,6 +38,7 @@ const Dashboard = () => {
         />
       </div>
       {/* <Messaging /> */}
+      CHAT
     </div>
   );
 };
