@@ -1,54 +1,42 @@
-import React from "react";
-import { useState } from "react";
-import {SearchUser} from "./SearchUser.jsx"
-import Messaging from "./Messaging";
+import React, { useState, useEffect } from "react";
+import { SearchUser } from "./SearchUser";
 
 const Dashboard = () => {
-
   const [users, setUsers] = useState([]);
+  //list of all users
 
-  // Get headers of logged in user
-  const loginCredentials = JSON.parse(localStorage.getItem("loginCredentials"));
-  const headers = loginCredentials.headers;
-  // console.log(loginCredentials);
-  // console.log(headers);
+  const headers = JSON.parse(localStorage.getItem("loginCredentials")).headers;
 
-  // Get list of ALL USERS
-  const getUsers = async (e) => {
-    e.preventDefault();
-    try{
-      // Fetch Avion API
-      const res = await fetch("http://206.189.91.54/api/v1/users", {
-        method: "GET",
-        headers: headers
-      })
-        .then((res) => res.json())
+  useEffect(() => {
+    fetch("http://206.189.91.54/api/v1/users", {
+      method: "GET",
+      headers,
+    })
+      .then((res) => res.json())
+      .then((res) => res.data)
 
-        .then((users) => {
+      .then(
+        (users) => {
           setUsers(users);
-        })
-
-        // Show data if fetch is successful
-        .then((data) => {
-          console.log(data)
-        })
-
-      // Show error if fetch is unsuccessful
-    } catch (error) {
-      console.log(error);
-    }
-  };
+        }
+        //users.map((user) => {
+        //setSearchUser(user);
+        //console.log(user);
+        //return { label: user.uid, value: user.id };
+        //})
+      );
+    //.then((data) => setSearchUser(data));
+  }, []);
 
   return (
     <div>
-      <button onClick={getUsers}>Get Users</button>
       <div>
         <SearchUser
           users={users}
           //setSearchUserResults={setSearchUserResults}
         />
       </div>
-        <Messaging headers={headers}/>
+      CHAT
     </div>
   );
 };
