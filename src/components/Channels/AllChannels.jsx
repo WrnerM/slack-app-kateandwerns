@@ -45,9 +45,17 @@ const AllChannels = ({ headers }) => {
   }
 
   const channelDetails = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
+    console.log(e.target.textContent)
+    const currentChannel = e.target.textContent;
     let channelID = channels.map((channel) => channel.id);
+
+    channels.forEach(channel => {
+      if(currentChannel === channel.name){
+        console.log(channel)
+      }
+    } )
 
     try{
         // Fetch Avion API
@@ -68,9 +76,9 @@ const AllChannels = ({ headers }) => {
         .then((res) => res.json())
 
         // Show data if fetch is successful
-        .then((data) => {
-            console.log(data)
-        })
+        // .then((data) => {
+        //     console.log(data)
+        // })
 
         // Show error if fetch is unsuccessful
     } catch (error) {
@@ -83,7 +91,7 @@ const AllChannels = ({ headers }) => {
     <div>
       <p>User's channels:</p>
       <div className="border-2 border-black w-52">
-        {channels.map((channel) => (
+        {channels?.map((channel) => (
           <div key={channel.id}>
             <button onClick={channelDetails}>{channel.name}</button>
           </div>
