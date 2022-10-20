@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState, useEffect } from 'react';
 
 const AllChannels = ({ headers }) => {
 
@@ -7,8 +8,13 @@ const AllChannels = ({ headers }) => {
   let expiryData = headers["expiry"];
   let uidData = headers["uid"];
 
-  const getUsers = async (e) => {
-    e.preventDefault();
+  const [channels, setChannels] = useState([]);
+  
+  useEffect(() =>{
+    getChannels();
+  }, []);
+
+  const getChannels = async () => {
 
     try{
         // Fetch Avion API
@@ -22,11 +28,15 @@ const AllChannels = ({ headers }) => {
             }
         })
         .then((res) => res.json())
+        .then((res) =>{
+          console.log(res);
+          setChannels(res.data);
+        })
 
         // Show data if fetch is successful
-        .then((data) => {
-            console.log(data)
-        })
+        // .then((data) => {
+        //     console.log(data)
+        // })
 
       // Show error if fetch is unsuccessful
     } catch (error) {
@@ -36,7 +46,14 @@ const AllChannels = ({ headers }) => {
     
   return (
     <div>
-      <button onClick={getUsers}>Get All Channels</button>
+      <p>User's channels:</p>
+      <div className="border-2 border-black w-52">
+        {channels.map((channel) => (
+          <div key={channel.id}>
+            <p>{channel.name}</p>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

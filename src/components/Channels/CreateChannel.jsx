@@ -1,10 +1,8 @@
 import React from 'react'
 import { useState } from 'react';
+import { SearchUser } from '../SearchUser';
 
-const CreateChannel = ({ headers, users }) => {
-
-  const [searchInput, setSearchInput] = useState("");
-  // var userIDss = JSON.parse(localStorage.getItem("userIdss")) || [];
+const CreateChannel = ({ headers, filteredUsers, handleSearchChange, searchInput }) => {
 
   // Create variables for headers data
   let accessToken = headers["access-token"];
@@ -12,26 +10,12 @@ const CreateChannel = ({ headers, users }) => {
   let expiryData = headers["expiry"];
   let uidData = headers["uid"];
 
-  // Search User
-  const findUser = users.filter((user) => {
-    return user.uid.includes(searchInput);
-  });
-  const handleSearchChange = (e) => {
-    setSearchInput(e.target.value);
-  };
-  const showUser = (e) => {
-    e.preventDefault();
-    console.log("filteredUsers", findUser[0].id);
-    // userIDss.push(findUser[0].id);
-    // localStorage.setItem("userIDss", JSON.stringify(userIDss));
-    // console.log(userIDss)
-  }
 
   // Create Channel
   const addChannel = async (e) => {
     e.preventDefault();
     
-    let userIDs = findUser[0].id;
+    let userIDs = filteredUsers[0].id;
 
     try{
         // Fetch Avion API
@@ -50,12 +34,11 @@ const CreateChannel = ({ headers, users }) => {
           })
         })
         .then((res) => res.json())
-
         // Show data if fetch is successful
         .then((data) => {
-            console.log(data)
+          let currentChannel = data
+            console.log(currentChannel)
         })
-
         // Show error if fetch is unsuccessful
     } catch (error) {
         console.log(error);
@@ -64,16 +47,13 @@ const CreateChannel = ({ headers, users }) => {
 
   return (
     <div>
-      <form onSubmit={showUser}>
-      <input
-        value={searchInput}
-        type="text"
-        placeholder="Search user by email"
-        // onSubmit={handleSubmit}
-        onChange={handleSearchChange}
-      />
-      <button type="submit">Add User</button>
-      </form>
+      <div>
+        <p>Add Member:</p>
+        <SearchUser 
+          searchInput={searchInput}
+          filteredUsers={filteredUsers} 
+          handleSearchChange={handleSearchChange}/>
+      </div>
       <form onSubmit={addChannel}>
         <input name="channelName" type="text" placeholder="Channel name"></input>
         <button type="submit">Add Channel</button>

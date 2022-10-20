@@ -4,13 +4,20 @@ import AllChannels from './AllChannels'
 import ChannelDetails from './ChannelDetails'
 import AddMember from './AddMember'
 
-const Channels = ({ headers, users }) => {
+const Channels = ({ headers, filteredUsers, handleSearchChange, searchInput}) => {
   return (
     <div>
-      <CreateChannel headers={headers} users={users}/>
+      <div>
+      <CreateChannel 
+        headers={headers} 
+        filteredUsers={filteredUsers} 
+        searchInput={searchInput} 
+        handleSearchChange={handleSearchChange}
+      />
       <AllChannels headers={headers} />
       <ChannelDetails headers={headers} />
       <AddMember headers={headers} />
+      </div>
     </div>
   )
 }
