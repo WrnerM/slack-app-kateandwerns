@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { SearchUser } from './SearchUser';
 
-const Messaging = ({filteredUsers}) => {
+const Messaging = ({filteredUsers, handleSearchChange, searchInput}) => {
 
   // Get logged in user's credentials
   const loginCredentials = JSON.parse(localStorage.getItem("loginCredentials"));
   const headers = loginCredentials.headers;
+
+  const [sendMsg, setSendMsg] = useState({});
+  const [receiveMsg, setReceiveMsg] = useState([]);
  
   // Create variables for headers data
   let accessToken = headers["access-token"];
@@ -13,6 +16,18 @@ const Messaging = ({filteredUsers}) => {
   let expiryData = headers["expiry"];
   let uidData = headers["uid"];
 
+  // Set timeout for retrieve message
+  const SECOND = 1000;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // console.log("hi");
+    }, SECOND);
+    return () => clearInterval(interval);
+  }, []);
+
+  
+  // Retrieve messages
   const retrieveMessage = async (e) => {
     let receiverID = filteredUsers[0].id;
     try{
@@ -27,18 +42,21 @@ const Messaging = ({filteredUsers}) => {
         }
       })
         .then((res) => res.json())
-
+        .then((res) => res.data)
         // Show data if fetch is successful
-        .then((data) => {
-          console.log(data)
-        })
+        .then((receiveMsg) => {
+          setReceiveMsg(receiveMsg);
+        });
 
       // Show error if fetch is unsuccessful
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
+  const recentChatHistory = receiveMsg.slice(-11);
+
+  // Send message
   const sendMessage = async (e) => {
     e.preventDefault();
 
@@ -67,22 +85,40 @@ const Messaging = ({filteredUsers}) => {
       } catch (error) {
         console.log(error);
       }
+
+      body = "";
   };
 
   return (
     <div>
-      {/* <div>
-        <input name="searchBar" type="text" placeholder="Search User" />
-        <button onClick={searchUser}>+</button>
-      </div> */}
+      <h3 className="directMessages">Direct Messages</h3>
       <div>
-        square showing messages<br/><br/><br/><br/><br/>square showing messages
+        <SearchUser 
+        searchInput={searchInput}
+          filteredUsers={filteredUsers} 
+          handleSearchChange={handleSearchChange}/>
       </div>
-      <button onClick={retrieveMessage}>Retrieve Messages</button>
+      <div className="chatMsgs">
+        <ul>
+          {recentChatHistory.map((chats) => (
+            <li key={chats.id}>{chats.body}</li>
+          ))}
+        </ul>
+      </div>
+
       <form onSubmit={sendMessage}>
-        <input name="messageBox" type="text" placeholder="Type message..."/>
-        <button type="submit">Send message</button>
+        <textarea
+          className="sendMsgBox"
+          name="messageBox"
+          type="textarea"
+          placeholder="Type message..."
+        />
+        <button className="sendMsgButton" type="submit">
+          Send Message
+        </button>
       </form>
+
+      <button onClick={retrieveMessage}>Retrieve Messages</button>
     </div>
   )
 }
