@@ -16,6 +16,15 @@ const Messaging = ({ filteredUsers }) => {
   let uidData = headers["uid"];
 
   //retrieve message
+  const SECOND = 1000;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      console.log("hi");
+    }, SECOND);
+    return () => clearInterval(interval);
+  }, []);
+
   const retrieveMessage = async (e) => {
     let receiverID = filteredUsers[0].id;
     try {
@@ -37,7 +46,7 @@ const Messaging = ({ filteredUsers }) => {
         // Show data if fetch is successful
         .then((receiveMsg) => {
           setReceiveMsg(receiveMsg);
-          console.log("messagehistory", receiveMsg);
+          //console.log("messagehistory", receiveMsg);
         });
 
       // Show error if fetch is unsuccessful
@@ -45,8 +54,9 @@ const Messaging = ({ filteredUsers }) => {
       console.log(error);
     }
   };
+
   const recentChatHistory = receiveMsg.slice(-11);
-  console.log(recentChatHistory);
+  //console.log(recentChatHistory);
   // const chatHistory = receiveMsg.map((result) => {
   //   return `${result.body}`;
   // });
@@ -85,6 +95,8 @@ const Messaging = ({ filteredUsers }) => {
     } catch (error) {
       console.log(error);
     }
+
+    body = "";
   };
 
   return (

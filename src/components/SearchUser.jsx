@@ -19,7 +19,7 @@ export const SearchUser = ({ users }) => {
   const filteredUsers = users.filter((user) => {
     return user.uid.toLowerCase().includes(searchInput);
   });
-  console.log(filteredUsers);
+  //console.log(filteredUsers);
 
   const handleSearchChange = (e) => {
     setSearchInput(e.target.value);
@@ -29,7 +29,7 @@ export const SearchUser = ({ users }) => {
     <div>
       <div className="chatBox">
         <h3 className="directMessages">Direct Messages</h3>
-        <p>User search:</p>
+        <p>Send Message To:</p>
         <input
           className="searchBoxUser"
           value={searchInput}
