@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import RenderUsersList from "./RenderUsersList";
 import Messaging from "./Messaging";
 
 export const SearchUser = ({ users }) => {
   const [searchInput, setSearchInput] = useState("");
-  const [userWillMessage, setUserWillMessage] = useState("");
   //   const handleSubmit = (e) => e.preventDefault();
   //   console.log(searchUser);
   //   const handleSearchChange = (e) => {
@@ -45,8 +43,6 @@ export const SearchUser = ({ users }) => {
             <li key={email.id}>{email.email}</li>
           ))}
         </ul>
-
-        <div className="chatMsgs"></div>
 
         <Messaging filteredUsers={filteredUsers} />
       </div>
