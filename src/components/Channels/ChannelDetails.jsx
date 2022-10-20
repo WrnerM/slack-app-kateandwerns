@@ -11,7 +11,7 @@ const ChannelDetails = ({ headers }) => {
 
 
   const showChannelDetails = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
     try{
         // Fetch Avion API

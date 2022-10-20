@@ -22,8 +22,8 @@ const AddMember = ({ headers }) => {
             uid: uidData,
             },
             // body: JSON.stringify({
-            // name: e.target.channelName.value,
-            // user_ids: [userIDs]
+            // "id":
+            // "member_id":
             // })
         })
         .then((res) => res.json())
