@@ -62,8 +62,17 @@ const Dashboard = () => {
           <button onClick={showChannelsPage}>Channels</button>
         </div>
         <div>
-          {messagePage && <Messaging filteredUsers={filteredUsers} searchInput={searchInput} handleSearchChange={handleSearchChange}/>}
-          {channelsPage && <Channels users={users} headers={headers} />}
+          {messagePage && <Messaging 
+              filteredUsers={filteredUsers} 
+              searchInput={searchInput} 
+              handleSearchChange={handleSearchChange}
+          />}
+          {channelsPage && <Channels 
+              headers={headers} 
+              filteredUsers={filteredUsers} 
+              searchInput={searchInput} 
+              handleSearchChange={handleSearchChange}
+          />}
         </div>
       </div>
     </div>

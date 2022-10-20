@@ -9,6 +9,8 @@ const Messaging = ({filteredUsers, handleSearchChange, searchInput}) => {
 
   const [sendMsg, setSendMsg] = useState({});
   const [receiveMsg, setReceiveMsg] = useState([]);
+  const [senderUid, setSenderUid] = useState("");
+  const [emptySendMessage, setEmptySendMessage] = useState("");
  
   // Create variables for headers data
   let accessToken = headers["access-token"];
@@ -21,39 +23,41 @@ const Messaging = ({filteredUsers, handleSearchChange, searchInput}) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      // console.log("hi");
+
+// Retrieve messages
+const retrieveMessage = async (e) => {
+  let receiverID = filteredUsers[0].id;
+  try{
+    // Fetch Avion API
+    const res = await fetch(`http://206.189.91.54/api/v1/messages?receiver_id=${receiverID}&receiver_class=User`,{
+      method: "GET",
+      headers: {
+        "access-token": accessToken,
+        client: clientData,
+        expiry: expiryData,
+        uid: uidData,
+      }
+    })
+      .then((res) => res.json())
+      .then((res) => res.data)
+      // Show data if fetch is successful
+      .then((receiveMsg) => {
+        setReceiveMsg(receiveMsg);
+      });
+
+    // Show error if fetch is unsuccessful
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+retrieveMessage();
+
     }, SECOND);
     return () => clearInterval(interval);
-  }, []);
+  }, [filteredUsers, handleSearchChange, searchInput, sendMsg]);
 
   
-  // Retrieve messages
-  const retrieveMessage = async (e) => {
-    let receiverID = filteredUsers[0].id;
-    try{
-      // Fetch Avion API
-      const res = await fetch(`http://206.189.91.54/api/v1/messages?receiver_id=${receiverID}&receiver_class=User`,{
-        method: "GET",
-        headers: {
-          "access-token": accessToken,
-          client: clientData,
-          expiry: expiryData,
-          uid: uidData,
-        }
-      })
-        .then((res) => res.json())
-        .then((res) => res.data)
-        // Show data if fetch is successful
-        .then((receiveMsg) => {
-          setReceiveMsg(receiveMsg);
-        });
-
-      // Show error if fetch is unsuccessful
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const recentChatHistory = receiveMsg.slice(-11);
 
   // Send message
@@ -75,12 +79,11 @@ const Messaging = ({filteredUsers, handleSearchChange, searchInput}) => {
           }
         })
           .then((res) => res.json())
-  
-          // Show data if fetch is successful
-          .then((data) => {
-            console.log(data)
-          })
-  
+          .then((res) => res.data)
+          .then((sendMsg) => {
+          setSendMsg(sendMsg);
+        });
+
         // Show error if fetch is unsuccessful
       } catch (error) {
         console.log(error);
@@ -93,19 +96,22 @@ const Messaging = ({filteredUsers, handleSearchChange, searchInput}) => {
     <div>
       <h3 className="directMessages">Direct Messages</h3>
       <div>
+        <p>Send Message To:</p>
         <SearchUser 
-        searchInput={searchInput}
+          searchInput={searchInput}
           filteredUsers={filteredUsers} 
           handleSearchChange={handleSearchChange}/>
       </div>
       <div className="chatMsgs">
         <ul>
-          {recentChatHistory.map((chats) => (
-            <li key={chats.id}>{chats.body}</li>
+          {receiveMsg.map((chats) => (
+            <li className="messagesList" key={chats.id}>
+              <span className="userDisplay">{chats.sender.uid}</span>
+              {chats.body}
+            </li>
           ))}
         </ul>
       </div>
-
       <form onSubmit={sendMessage}>
         <textarea
           className="sendMsgBox"
@@ -117,8 +123,6 @@ const Messaging = ({filteredUsers, handleSearchChange, searchInput}) => {
           Send Message
         </button>
       </form>
-
-      <button onClick={retrieveMessage}>Retrieve Messages</button>
     </div>
   )
 }
