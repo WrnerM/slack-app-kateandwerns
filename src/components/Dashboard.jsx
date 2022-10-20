@@ -24,22 +24,13 @@ const Dashboard = () => {
         (users) => {
           setUsers(users);
         }
-        //users.map((user) => {
-        //setSearchUser(user);
-        //console.log(user);
-        //return { label: user.uid, value: user.id };
-        //})
       );
-    //.then((data) => setSearchUser(data));
   }, []);
 
   return (
     <div>
       <div>
-        <SearchUser
-          users={users}
-          //setSearchUserResults={setSearchUserResults}
-        />
+        <SearchUser users={users} />
       </div>
       {/* <Messaging /> */}
       <CreateChannel headers={headers} users={users} />
