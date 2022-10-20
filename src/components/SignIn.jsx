@@ -1,5 +1,4 @@
-import React from "react";
-
+import React, { useState } from "react";
 const SignIn = () => {
   const signIn = async (e) => {
     e.preventDefault();
@@ -15,7 +14,7 @@ const SignIn = () => {
         },
         body: JSON.stringify({
           email: e.target.signInEmail.value,
-          password: e.target.signInPassword.value
+          password: e.target.signInPassword.value,
         }),
       });
 

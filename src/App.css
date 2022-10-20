@@ -12,8 +12,8 @@
   font-family: Arial, Helvetica, sans-serif;
   padding: 10px;
   border-radius: 10px;
-  }
-  
+}
+
 .directMessages {
   font-size: x-large;
 }
@@ -30,6 +30,7 @@
   border: 1px solid black;
   height: 300px;
   padding: 2px;
+  overflow: auto;
 }
 
 .sendMsgButton {
@@ -51,4 +52,14 @@
 
 .list {
   list-style: none;
+}
+
+.messagesList {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+
+.userDisplay {
+  font-size: 10px;
 }

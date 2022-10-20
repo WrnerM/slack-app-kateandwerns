@@ -2,15 +2,13 @@ import React, { useState, useEffect } from "react";
 import Messaging from "./Messaging";
 import Channels from "./Channels/Channels";
 
-
 const Dashboard = () => {
-
   // Set states
   const [users, setUsers] = useState([]);
   const [searchInput, setSearchInput] = useState("");
 
   // Get logged in users' credentials
-  const loginCredentials = JSON.parse(localStorage.getItem("loginCredentials"))
+  const loginCredentials = JSON.parse(localStorage.getItem("loginCredentials"));
   const headers = loginCredentials.headers;
 
   // Fetch Avion API to get all users
@@ -22,22 +20,19 @@ const Dashboard = () => {
       .then((res) => res.json())
       .then((res) => res.data)
 
-      .then(
-        (users) => {
-          setUsers(users);
-        }
-      );
+      .then((users) => {
+        setUsers(users);
+      });
   }, []);
 
   // Search user
   const filteredUsers = users.filter((user) => {
     return user.uid.toLowerCase().includes(searchInput);
   });
-  console.log(filteredUsers);
+  //console.log(filteredUsers);
   const handleSearchChange = (e) => {
     setSearchInput(e.target.value);
   };
-
 
   return (
     <div>
@@ -45,9 +40,12 @@ const Dashboard = () => {
         <button>Direct Message</button>
         <button>Channels</button>
       </div>
-      <Messaging filteredUsers={filteredUsers} searchInput={searchInput} handleSearchChange={handleSearchChange}/>
+      <Messaging
+        filteredUsers={filteredUsers}
+        searchInput={searchInput}
+        handleSearchChange={handleSearchChange}
+      />
       <Channels users={users} headers={headers} />
-
     </div>
   );
 };
