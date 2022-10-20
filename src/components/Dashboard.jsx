@@ -47,6 +47,7 @@ const Dashboard = () => {
       </div>
       <Messaging filteredUsers={filteredUsers} searchInput={searchInput} handleSearchChange={handleSearchChange}/>
       <Channels users={users} headers={headers} />
+
     </div>
   );
 };
