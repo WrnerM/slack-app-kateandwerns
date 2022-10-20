@@ -8,7 +8,10 @@ function App() {
 
   return (
     <div>
-      {loggedIn ? <Dashboard /> : <Authentication />}
+      {loggedIn 
+        ? <Dashboard /> 
+        : <Authentication />
+      }
     </div>
   );
 }
