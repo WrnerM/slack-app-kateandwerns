@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { SearchUser } from "./SearchUser";
-import CreateChannel from "./CreateChannel";
-import AllChannels from "./AllChannels";
-import ChannelDetails from "./ChannelDetails";
-import AddMember from "./AddMember";
-// import Messaging from "./Messaging";
+import Messaging from "./Messaging";
+import Channels from "./Channels/Channels";
+
 
 const Dashboard = () => {
+
+  // Set states
   const [users, setUsers] = useState([]);
-  //list of all users
+  const [searchInput, setSearchInput] = useState("");
 
-  const headers = JSON.parse(localStorage.getItem("loginCredentials")).headers;
+  // Get logged in users' credentials
+  const loginCredentials = JSON.parse(localStorage.getItem("loginCredentials"))
+  const headers = loginCredentials.headers;
 
+  // Fetch Avion API to get all users
   useEffect(() => {
     fetch("http://206.189.91.54/api/v1/users", {
       method: "GET",
@@ -27,16 +29,24 @@ const Dashboard = () => {
       );
   }, []);
 
+  // Search user
+  const filteredUsers = users.filter((user) => {
+    return user.uid.toLowerCase().includes(searchInput);
+  });
+  console.log(filteredUsers);
+  const handleSearchChange = (e) => {
+    setSearchInput(e.target.value);
+  };
+
+
   return (
     <div>
-      <div>
-        <SearchUser users={users} />
+      <div className="Sidebar">
+        <button>Direct Message</button>
+        <button>Channels</button>
       </div>
-      {/* <Messaging /> */}
-      <CreateChannel headers={headers} users={users} />
-      <AllChannels headers={headers} />
-      <ChannelDetails headers={headers} />
-      <AddMember headers={headers} />
+      <Messaging filteredUsers={filteredUsers} searchInput={searchInput} handleSearchChange={handleSearchChange}/>
+      <Channels users={users} headers={headers} />
     </div>
   );
 };

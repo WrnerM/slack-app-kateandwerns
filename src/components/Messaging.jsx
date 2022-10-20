@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { SearchUser } from './SearchUser';
 
-const Messaging = ({filteredUsers}) => {
+const Messaging = ({filteredUsers, handleSearchChange, searchInput}) => {
 
   // Get logged in user's credentials
   const loginCredentials = JSON.parse(localStorage.getItem("loginCredentials"));
@@ -91,7 +91,14 @@ const Messaging = ({filteredUsers}) => {
 
   return (
     <div>
-<div className="chatMsgs">
+      <h3 className="directMessages">Direct Messages</h3>
+      <div>
+        <SearchUser 
+        searchInput={searchInput}
+          filteredUsers={filteredUsers} 
+          handleSearchChange={handleSearchChange}/>
+      </div>
+      <div className="chatMsgs">
         <ul>
           {recentChatHistory.map((chats) => (
             <li key={chats.id}>{chats.body}</li>
