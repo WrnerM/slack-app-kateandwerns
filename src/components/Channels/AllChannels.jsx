@@ -43,6 +43,41 @@ const AllChannels = ({ headers }) => {
         console.log(error);
     }
   }
+
+  const channelDetails = async (e) => {
+    e.preventDefault();
+
+    let channelID = channels.map((channel) => channel.id);
+
+    try{
+        // Fetch Avion API
+        const res = await fetch(`http://206.189.91.54/api/v1/channels/${channelID}`, {
+            method: "GET",
+            headers: {
+            // "Content-Type": "application/json",
+            "access-token": accessToken,
+            client: clientData,
+            expiry: expiryData,
+            uid: uidData,
+            },
+            // body: JSON.stringify({
+            // name: e.target.channelName.value,
+            // user_ids: [userIDs]
+            // })
+        })
+        .then((res) => res.json())
+
+        // Show data if fetch is successful
+        .then((data) => {
+            console.log(data)
+        })
+
+        // Show error if fetch is unsuccessful
+    } catch (error) {
+        console.log(error);
+    }
+  }
+  
     
   return (
     <div>
@@ -50,7 +85,7 @@ const AllChannels = ({ headers }) => {
       <div className="border-2 border-black w-52">
         {channels.map((channel) => (
           <div key={channel.id}>
-            <p>{channel.name}</p>
+            <button onClick={channelDetails}>{channel.name}</button>
           </div>
         ))}
       </div>
