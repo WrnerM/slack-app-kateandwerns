@@ -6,7 +6,7 @@ const Messaging = ({ filteredUsers }) => {
   const loginCredentials = JSON.parse(localStorage.getItem("loginCredentials"));
   const headers = loginCredentials.headers;
 
-  const [sendMsg, setSendMsg] = useState({});
+  const [sendMsg, setSendMsg] = useState([]);
   const [receiveMsg, setReceiveMsg] = useState([]);
 
   // Create variables for headers data
@@ -21,46 +21,41 @@ const Messaging = ({ filteredUsers }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       console.log("hi");
+      const retrieveMessage = async (e) => {
+        let receiverID = filteredUsers[0].id;
+        try {
+          // Fetch Avion API
+          const res = await fetch(
+            `http://206.189.91.54/api/v1/messages?receiver_id=${receiverID}&receiver_class=User`,
+            {
+              method: "GET",
+              headers: {
+                "access-token": accessToken,
+                client: clientData,
+                expiry: expiryData,
+                uid: uidData,
+              },
+            }
+          )
+            .then((res) => res.json())
+            .then((res) => res.data)
+            // Show data if fetch is successful
+            .then((receiveMsg) => {
+              setReceiveMsg(receiveMsg);
+              //console.log("messagehistory", receiveMsg);
+            });
+
+          // Show error if fetch is unsuccessful
+        } catch (error) {
+          console.log(error);
+        }
+      };
     }, SECOND);
     return () => clearInterval(interval);
-  }, []);
-
-  const retrieveMessage = async (e) => {
-    let receiverID = filteredUsers[0].id;
-    try {
-      // Fetch Avion API
-      const res = await fetch(
-        `http://206.189.91.54/api/v1/messages?receiver_id=${receiverID}&receiver_class=User`,
-        {
-          method: "GET",
-          headers: {
-            "access-token": accessToken,
-            client: clientData,
-            expiry: expiryData,
-            uid: uidData,
-          },
-        }
-      )
-        .then((res) => res.json())
-        .then((res) => res.data)
-        // Show data if fetch is successful
-        .then((receiveMsg) => {
-          setReceiveMsg(receiveMsg);
-          //console.log("messagehistory", receiveMsg);
-        });
-
-      // Show error if fetch is unsuccessful
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  }, [sendMsg]);
 
   const recentChatHistory = receiveMsg.slice(-11);
   //console.log(recentChatHistory);
-  // const chatHistory = receiveMsg.map((result) => {
-  //   return `${result.body}`;
-  // });
-  // console.log(chatHistory);
 
   //send message to filtered user
   const sendMessage = async (e) => {
@@ -84,19 +79,17 @@ const Messaging = ({ filteredUsers }) => {
         }
       )
         .then((res) => res.json())
-
+        .then((res) => res.data)
         // Show data if fetch is successful
-        .then((data) => {
-          //setSendMsg(sendMsg);
-          console.log("message", data);
+        .then((sendMsg) => {
+          setSendMsg(sendMsg);
+          console.log("message", sendMsg);
         });
 
       // Show error if fetch is unsuccessful
     } catch (error) {
       console.log(error);
     }
-
-    body = "";
   };
 
   return (
@@ -125,7 +118,7 @@ const Messaging = ({ filteredUsers }) => {
         </button>
       </form>
 
-      <button onClick={retrieveMessage}>Retrieve Messages</button>
+      {/* <button onClick={retrieveMessage}>Retrieve Messages</button> */}
     </div>
   );
 };
